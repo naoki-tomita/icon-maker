@@ -1,0 +1,37 @@
+{
+  "name": "icon-maker",
+  "version": "0.0.1",
+  "description": "Icon pile upper",
+  "main": "index.js",
+  "author": "ueda kojiro",
+  "license": "MIT",
+  "scripts": {
+    "start": "run-p serve build watch",
+    "serve": "ws",
+    "clean": "trash ./dist",
+    "build": "run-s clean && run-p build:*",
+    "build:script": "webpack",
+    "build:styles": "cpx ./src/styles/**/*.* ./dist/css",
+    "build:html": "cpx ./src/application/**/*.* ./dist",
+    "watch": "run-p watch:*",
+    "watch:script": "chokidar './src/scripts/**/*.*' -c 'yarn run build:script'",
+    "watch:styles": "chokidar './src/styles/**/*.*' -c 'yarn run build:styles'",
+    "watch:html": "chokidar './src/styles/**/*.*' -c 'yarn run build:html'"
+  },
+  "dependencies": {
+    "@types/react": "^16.0.10",
+    "@types/react-dom": "^16.0.1",
+    "@types/webpack": "^3.0.13",
+    "awesome-typescript-loader": "^3.2.3",
+    "chokidar-cli": "^1.2.0",
+    "cpx": "^1.5.0",
+    "local-web-server": "^2.2.4",
+    "npm-run-all": "^4.1.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "trash-cli": "^1.4.0",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.3",
+    "webpack": "^3.6.0"
+  }
+}
