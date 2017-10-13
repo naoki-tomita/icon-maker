@@ -46,7 +46,10 @@ export class ImageList extends React.Component<Props> {
       this.selectedImage.splice(index, 1);
     } else { // not found
       // add
-      this.selectedImage.push({ image: this.props.images[i], index: i });
+      this.selectedImage.push({ 
+        image: this.props.images[i], 
+        index: i
+      });
     }
     this.props.selectedImagesUpdated(this.selectedImage.map(im => im.image));
   }
