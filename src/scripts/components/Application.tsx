@@ -50,13 +50,4 @@ export class Application extends React.Component<{}, State> {
       selectedImages: images
     });
   }
-
-  // private updateCanvas = (context: CanvasRenderingContext2D) => {
-  //   context.fillStyle = 'red';
-  //   context.font = '24px Arial';
-  //   context.textAlign = 'left';
-  //   context.textBaseline = 'top';
-  //   context.clearRect(0, 0, 256, 256);
-  //   context.fillText("Hello World", 0, 0);
-  // }
 }

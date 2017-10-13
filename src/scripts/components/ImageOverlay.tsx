@@ -16,6 +16,7 @@ export class ImageOverlay extends React.Component<Props> {
 
   private updateCanvas = (context: CanvasRenderingContext2D) => {
     const { width, height } = this.props;
+    context.clearRect(0, 0, width, height);
     this.props.images.map(i => {
       const im = new Image();
       im.src = i;

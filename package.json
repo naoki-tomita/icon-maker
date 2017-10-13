@@ -15,10 +15,10 @@
     "build:html": "cpx ./src/application/**/*.* ./dist",
     "build:images": "cpx ./src/images/**/*.* ./dist/images",
     "watch": "run-p watch:*",
-    "watch:script": "chokidar ./src/scripts/**/*.* -c \"yarn run build:script\"",
-    "watch:styles": "chokidar ./src/styles/**/*.*' -c \"yarn run build:styles\"",
-    "watch:html": "chokidar ./src/styles/**/*.* -c \"yarn run build:html\"",
-    "watch:images": "chokidar ./src/images/**/*.* -c \"yarn run build:images\""
+    "watch:script": "chokidar \"./src/scripts/**/*.*\" -c \"yarn run build:script\"",
+    "watch:styles": "chokidar \"./src/styles/**/*.*\" -c \"yarn run build:styles\"",
+    "watch:html": "chokidar \"./src/styles/**/*.*\" -c \"yarn run build:html\"",
+    "watch:images": "chokidar \"./src/images/**/*.*\" -c \"yarn run build:images\""
   },
   "dependencies": {
     "@types/react": "^16.0.10",

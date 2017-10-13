@@ -21253,6 +21253,7 @@ var ImageOverlay = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.updateCanvas = function (context) {
             var _a = _this.props, width = _a.width, height = _a.height;
+            context.clearRect(0, 0, width, height);
             _this.props.images.map(function (i) {
                 var im = new Image();
                 im.src = i;
@@ -21345,8 +21346,18 @@ var ImageList = /** @class */ (function (_super) {
     __extends(ImageList, _super);
     function ImageList() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.selectImage = function (component) {
-            console.log(component);
+        _this.selectedImage = [];
+        _this.selectImage = function (i) {
+            var index = _this.selectedImage.findIndex(function (im) { return im.index === i; });
+            if (index !== -1) {
+                // remove
+                _this.selectedImage.splice(index, 1);
+            }
+            else {
+                // add
+                _this.selectedImage.push({ image: _this.props.images[i], index: i });
+            }
+            _this.props.selectedImagesUpdated(_this.selectedImage.map(function (im) { return im.image; }));
         };
         return _this;
     }
@@ -21361,11 +21372,11 @@ var ImageList = /** @class */ (function (_super) {
     };
     ImageList.prototype.createImageList = function (images) {
         var _this = this;
-        return images.map(function (image, i) { return React.createElement("div", { onClick: _this.selectImage }, _this.createImageComponent(image, i)); });
+        return images.map(function (image, i) { return React.createElement("div", { onClick: _this.selectImage.bind(_this, i), key: i }, _this.createImageComponent(image)); });
     };
-    ImageList.prototype.createImageComponent = function (image, i) {
+    ImageList.prototype.createImageComponent = function (image) {
         var size = this.props.iconSize;
-        return React.createElement(Icon_1.Icon, { url: image, size: size, key: i });
+        return React.createElement(Icon_1.Icon, { url: image, size: size });
     };
     return ImageList;
 }(React.Component));
