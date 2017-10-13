@@ -7,9 +7,10 @@ interface Props {
     height: number;
   };
   images: string[];
+  selectedImagesUpdated: (images: string[]) => void
 }
 
-export class ImageList extends React.Component<Props> {  
+export class ImageList extends React.Component<Props> {
   public render() {
     const parentStyle: { [ key:string ]: string } = {
       display: "flex",
@@ -26,11 +27,15 @@ export class ImageList extends React.Component<Props> {
   }
 
   private createImageList(images: string[]) {
-    return images.map((image, i) => this.createImageComponent(image, i));
+    return images.map((image, i) => <div onClick={this.selectImage}>{this.createImageComponent(image, i)}</div>);
   }
 
   private createImageComponent(image: string, i: number) {
     const size = this.props.iconSize;
     return <Icon url={image} size={size} key={i}></Icon>
+  }
+
+  private selectImage = (component: any) => {
+    console.log(component);
   }
 }
