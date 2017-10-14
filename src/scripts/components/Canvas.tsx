@@ -6,7 +6,7 @@ interface Props {
   updateCanvas: (context: CanvasRenderingContext2D) => void;
 }
 
-export class Canvas extends React.Component<Props> {  
+export class Canvas extends React.Component<Props> {
   public refs: {
     canvas: HTMLCanvasElement;
   };
