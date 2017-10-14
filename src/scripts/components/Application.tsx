@@ -7,19 +7,7 @@ const images = [
   "image02.ico",
   "image03.ico",
   "image04.png",
-  "image01.jpg",
-  "image02.ico",
-  "image03.ico",
-  "image04.png",
-  "image01.jpg",
-  "image02.ico",
-  "image03.ico",
-  "image04.png",
-  "image01.jpg",
-  "image02.ico",
-  "image03.ico",
-  "image04.png",
-].map(i => `./images/${i}`);
+].map(i => `./images/sample/${i}`);
 const imageSize = { width: 100, height: 100 };
 
 interface State {

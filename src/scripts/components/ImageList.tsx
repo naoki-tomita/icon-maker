@@ -1,6 +1,11 @@
 import * as React from "react";
 import { Icon } from "./Icon";
 
+interface SelectableImage {
+  url: string;
+  selected: boolean;
+}
+
 interface Props {
   iconSize: {
     width: number;
@@ -10,13 +15,31 @@ interface Props {
   selectedImagesUpdated: (images: string[]) => void
 }
 
-export class ImageList extends React.Component<Props> {
+interface State {
+  images: Array<SelectableImage>;
+}
+
+export class ImageList extends React.Component<Props, State> {
   private selectedImage: Array<{
     image: string;
     index: number;
   }> = [];
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      images: props.images.map(i => ({url: i, selected: false})),
+    };
+  }
+
+  public componentWillReceiveProps(nextProps: Props) {
+    const some = (idx: number) => this.selectedImage.some((i) => i.index === idx);
+    this.setState({
+      images: nextProps.images.map((i, idx) => ({url: i, selected: some(idx)})),
+    });
+  }
+
   public render() {
-    const parentStyle: { [ key:string ]: string } = {
+    const parentStyle: React.CSSProperties = {
       display: "flex",
       flexWrap: "wrap",
       // justifyContent: "space-between",
@@ -25,18 +48,49 @@ export class ImageList extends React.Component<Props> {
 
     return (
       <div style={parentStyle}>
-        {this.createImageList(this.props.images)}
+        {this.createImageList(this.state.images)}
       </div>
     );
   }
 
-  private createImageList(images: string[]) {
-    return images.map((image, i) => <div onClick={this.selectImage.bind(this, i)} key={i}>{this.createImageComponent(image)}</div>);
+  private createImageList(images: SelectableImage[]) {
+    return images.map((image, i) => 
+      <div
+        style={{position: "relative"}}
+        onClick={this.selectImage.bind(this, i)} 
+        key={i}>
+          {image.selected && this.createCheckIcon()}
+          {this.createImageComponent(image.url)}
+      </div>
+    );
+  }
+
+  private createCheckIcon() {
+    const check: React.CSSProperties = {
+      backgroundImage: "url(./images/check.ico)",
+      backgroundSize: "50px",
+      position: "absolute",
+      top: "0",
+      right: "0",
+      padding: "25px"
+    };
+    return <span style={check}></span>;
   }
 
   private createImageComponent(image: string) {
     const size = this.props.iconSize;
     return <Icon url={image} size={size}></Icon>
+  }
+
+  private flipSelected(i: number) {
+    const { images } = this.state;
+    images[i] = {
+      url: images[i].url,
+      selected: images[i].selected === false,
+    };
+    this.setState({
+      images,
+    });
   }
 
   private selectImage = (i: number) => {
@@ -46,11 +100,9 @@ export class ImageList extends React.Component<Props> {
       this.selectedImage.splice(index, 1);
     } else { // not found
       // add
-      this.selectedImage.push({ 
-        image: this.props.images[i], 
-        index: i
-      });
+      this.selectedImage.push({ image: this.state.images[i].url, index: i });
     }
-    this.props.selectedImagesUpdated(this.selectedImage.map(im => im.image));
+    this.flipSelected(i);
+    setTimeout(() => this.props.selectedImagesUpdated(this.selectedImage.map(im => im.image)));
   }
 }
