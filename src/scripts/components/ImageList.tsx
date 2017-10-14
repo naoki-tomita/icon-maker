@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Icon } from "./Icon";
+import { SelectableIcon } from "./SelectableIcon";
 
-interface SelectableImage {
+interface Selectable {
   url: string;
   selected: boolean;
 }
@@ -16,7 +16,7 @@ interface Props {
 }
 
 interface State {
-  images: Array<SelectableImage>;
+  images: Array<Selectable>;
 }
 
 export class ImageList extends React.Component<Props, State> {
@@ -53,33 +53,19 @@ export class ImageList extends React.Component<Props, State> {
     );
   }
 
-  private createImageList(images: SelectableImage[]) {
+  private createImageList(images: Selectable[]) {
     return images.map((image, i) => 
       <div
-        style={{position: "relative"}}
         onClick={this.selectImage.bind(this, i)} 
         key={i}>
-          {image.selected && this.createCheckIcon()}
-          {this.createImageComponent(image.url)}
+          {this.createIconComponent(image)}
       </div>
     );
   }
 
-  private createCheckIcon() {
-    const check: React.CSSProperties = {
-      backgroundImage: "url(./images/check.ico)",
-      backgroundSize: "50px",
-      position: "absolute",
-      top: "0",
-      right: "0",
-      padding: "25px"
-    };
-    return <span style={check}></span>;
-  }
-
-  private createImageComponent(image: string) {
+  private createIconComponent(image: Selectable) {
     const size = this.props.iconSize;
-    return <Icon url={image} size={size}></Icon>
+    return <SelectableIcon url={image.url} size={size} selected={image.selected}></SelectableIcon>
   }
 
   private flipSelected(i: number) {

@@ -2,12 +2,15 @@ import * as React from "react";
 import { ImageOverlay } from "./ImageOverlay";
 import { ImageList } from "./ImageList";
 
-const images = [
+const icons = [
   "image01.jpg",
   "image02.ico",
   "image03.ico",
   "image04.png",
 ].map(i => `./images/sample/${i}`);
+const frames = Array(10).fill(null).map(({}, idx) => `./images/frame/frame${idx + 1}.png`);
+const images = [...icons, ...frames];
+
 const imageSize = { width: 100, height: 100 };
 
 interface State {
